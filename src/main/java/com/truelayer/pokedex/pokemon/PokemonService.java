@@ -1,23 +1,19 @@
 package com.truelayer.pokedex.pokemon;
 
-import com.truelayer.pokedex.UrlConfig;
+import com.truelayer.pokedex.pokemon.models.Pokemon;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 @Service
 public class PokemonService {
 
-    private final WebClient webClient;
-
-    public PokemonService(WebClient.Builder builder, UrlConfig urlConfig) {
-        this.webClient = builder.baseUrl(urlConfig.getPokeApi()).build();
-    }
+    @Autowired
+    private PokeApiClient pokeApiClient;
 
     public Mono<Pokemon> getPokemon(String name) {
-        return this.webClient.get()
-                .uri("/pokemon-species/{name}", name)
-                .retrieve()
-                .bodyToMono(Pokemon.class);
+        return this.pokeApiClient
+                .getSpecies(name)
+                .map(Pokemon::mapToPokemon);
     }
 }

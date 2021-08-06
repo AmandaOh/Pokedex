@@ -1,0 +1,22 @@
+{
+  "flavor_text_entries": [
+    {
+      "flavor_text": "It was created by\na scientist after\nyears of horrific\fgene splicing and\nDNA engineering\nexperiments.",
+      "language": {
+        "name": "en",
+        "url": "https://pokeapi.co/api/v2/language/9/"
+      },
+      "version": {
+        "name": "red",
+        "url": "https://pokeapi.co/api/v2/version/1/"
+      }
+    }
+  ],
+  "habitat": {
+    "name": "rare",
+    "url": "https://pokeapi.co/api/v2/pokemon-habitat/5/"
+  },
+  "id": 150,
+  "is_legendary": true,
+  "name": "mewtwo"
+}
