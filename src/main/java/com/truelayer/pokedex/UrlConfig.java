@@ -1,17 +1,16 @@
 package com.truelayer.pokedex;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties("url")
+@Getter
+@NoArgsConstructor
+@Setter
 public class UrlConfig {
 
     private String pokeApi;
-
-    public String getPokeApi() {
-        return pokeApi;
-    }
-
-    public void setPokeApi(String pokeApi) {
-        this.pokeApi = pokeApi;
-    }
+    private String translationsApi;
 }

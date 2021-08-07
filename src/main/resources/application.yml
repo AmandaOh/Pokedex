@@ -1,2 +1,3 @@
 url:
   pokeApi: https://pokeapi.co/api/v2
+  translationsApi: https://api.funtranslations.com/translate

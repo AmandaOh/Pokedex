@@ -3,7 +3,7 @@ package com.truelayer.pokedex.pokemon.models;
 public enum Language {
     ENGLISH("en");
 
-    public final String name;
+    private final String name;
 
     Language(String name) {
         this.name = name;
