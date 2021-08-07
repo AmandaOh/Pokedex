@@ -1,7 +1,8 @@
-package com.truelayer.pokedex.pokemon;
+package com.truelayer.pokedex.translations;
 
 import com.truelayer.pokedex.UrlConfig;
-import com.truelayer.pokedex.pokemon.models.PokemonSpeciesResponseDTO;
+import com.truelayer.pokedex.translations.models.TranslationResponseDTO;
+import com.truelayer.pokedex.translations.models.TranslationType;
 import mockwebserver3.MockResponse;
 import mockwebserver3.MockWebServer;
 import org.junit.jupiter.api.AfterAll;
@@ -18,24 +19,23 @@ import org.springframework.util.StreamUtils;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
-public class PokeApiClientTests {
+class TranslationApiClientTest {
 
     private static MockWebServer mockWebClient;
 
-    @Value("classpath:mocks/poke-species-response.json")
-    Resource mockPokeSpeciesResponse;
+    @Value("classpath:mocks/shakespeare-translation-response.json")
+    Resource mockTranslationResponse;
 
     @Mock
     private UrlConfig urlConfig;
 
-    private PokeApiClient pokeApiClient;
+    private TranslationApiClient translationApiClient;
 
     @BeforeAll
     static void setUp() throws IOException {
@@ -51,29 +51,25 @@ public class PokeApiClientTests {
     @BeforeEach
     void init() {
         String baseUrl = String.format("http://localhost:%s", mockWebClient.getPort());
-        when(urlConfig.getPokeApi()).thenReturn(baseUrl);
-        pokeApiClient = new PokeApiClient(urlConfig);
+        when(urlConfig.getTranslationsApi()).thenReturn(baseUrl);
+        translationApiClient = new TranslationApiClient(urlConfig);
     }
 
     @Test
-    void getSpecies_returns_pokemon_species_given_name() throws Exception {
+    void translate_returns_translated_text() throws Exception {
+        String text = "It was created by a scientist after years of horrific gene splicing and DNA engineering experiments.";
         MockResponse mockResponse = new MockResponse()
                 .addHeader("Content-Type", "application/json")
-                .setBody(StreamUtils.copyToString(mockPokeSpeciesResponse.getInputStream(), Charset.defaultCharset()));
+                .setBody(StreamUtils.copyToString(mockTranslationResponse.getInputStream(), Charset.defaultCharset()));
         mockWebClient.enqueue(mockResponse);
 
-        PokemonSpeciesResponseDTO pokemonSpeciesResponseDTO = pokeApiClient.getSpecies("some-name").block();
+        TranslationResponseDTO actual = translationApiClient.translate(text, TranslationType.SHAKESPEARE).block();
 
-        PokemonSpeciesResponseDTO expected = new PokemonSpeciesResponseDTO(
-                "mewtwo",
-                List.of(
-                        new PokemonSpeciesResponseDTO.FlavorTextEntry(
-                                "It was created by\na scientist after\nyears of horrific\fgene splicing and\nDNA engineering\nexperiments.",
-                                new PokemonSpeciesResponseDTO.Language("en"))
-                ),
-                new PokemonSpeciesResponseDTO.Habitat("rare"),
-                true
+        TranslationResponseDTO expected = new TranslationResponseDTO(
+                new TranslationResponseDTO.Content(
+                        "'t wast did create by a scientist after years of horrific gene splicing and dna engineering experiments."
+                )
         );
-        assertEquals(expected, pokemonSpeciesResponseDTO);
+        assertEquals(expected, actual);
     }
 }
