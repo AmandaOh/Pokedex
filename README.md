@@ -1,20 +1,20 @@
-#Pokedex
+# Pokedex
 A REST API that returns Pokemon information.
 
 The API has two main endpoints:
 1. Return basic Pokemon information
 2. Return basic Pokemon information but with a 'fun' translation of the Pokemon description.
 
-#Run Application
+# Run Application
 1. Create docker image
 ```dtd
 ./gradlew bootBuildImage --imageName=pokedex
 ```
-1. Run docker container
+2. Run docker container
 ```dtd
  docker run -p 8080:8080 -t pokedex
 ```
-1. Pokedex application is up and running! Try hitting the following URL to test.
+3. Pokedex application is up and running! Try hitting the following URL to test.
 ```dtd
 http://localhost:8080/pokemon/translated/pikachu
 ```
