@@ -12,7 +12,8 @@ public class TranslationService {
     private TranslationApiClient translationApiClient;
 
     public Mono<String> getTranslation(String text, TranslationType type) {
-        return translationApiClient.translate(text, type)
-                .map(translationResponseDTO -> translationResponseDTO.getContents().getTranslated());
+            return translationApiClient.translate(text, type)
+                    .map(translationResponseDTO -> translationResponseDTO.getContents().getTranslated())
+                    .onErrorReturn(text);
     }
 }
