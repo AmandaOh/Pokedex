@@ -27,17 +27,20 @@ The API has two main endpoints:
 ```
 2. Pokedex application is up and running!
 
-# Test Application
+# Explore Application
 Try hitting the following URLs:
-
-1. To retrieve pokemon details:
+* To retrieve pokemon details:
 ```dtd
 http://localhost:8080/pokemon/{pokemon_name}
 ```
-
-3. To retrieve *translated* pokemon details:
+* To retrieve *translated* pokemon details:
 ```dtd
 http://localhost:8080/pokemon/translated/{pokemon_name}
+```
+
+# Run tests
+```dtd
+./gradlew test
 ```
 
 ### Pending requisites for production readiness
