@@ -52,7 +52,7 @@ class PokemonServiceTest {
 
         Pokemon expected = new Pokemon(
                 pokemonName,
-                pokemonDescription,
+                "It was created by a scientist after years of horrific gene splicing and DNA engineering experiments.",
                 "rare",
                 true
         );

@@ -19,7 +19,8 @@ public class Pokemon {
                         .equals(Language.ENGLISH.getName()))
                 .findFirst()
                 .map(PokemonSpeciesResponseDTO.FlavorTextEntry::getFlavorText)
-                .orElse("");
+                .orElse("")
+                .replaceAll("\\R", " ");
 
         return new Pokemon(
                 pokemonSpeciesResponseDTO.getName(),
